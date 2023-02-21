@@ -5,5 +5,5 @@ import androidx.compose.runtime.Composable
 
 @Composable
 fun CaloryDetailScreen() {
-    Text(text = "Welcome to details")
+    Text(text = "Welcome to detail screen")
 }
