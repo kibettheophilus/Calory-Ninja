@@ -15,16 +15,16 @@ class CaloryViewModel(private val caloryRepository: CaloryRepository) : ViewMode
     private val _calories = MutableLiveData<UiState<Calory>>()
     val calories: LiveData<UiState<Calory>> = _calories
 
-    init {
-        getCalories()
-    }
+//    init {
+//        getCalories(food = "rice")
+//    }
 
-    private fun getCalories() {
+    fun getCalories(food: String) {
         _calories.value = UiState.Loading()
 
         viewModelScope.launch {
             try {
-                val result = caloryRepository.getCalories()
+                val result = caloryRepository.getCalories(food)
                 _calories.value = UiState.Success(result)
                 Log.d("CALORIES", "CALORIESVM: $result")
             } catch (e: Exception) {

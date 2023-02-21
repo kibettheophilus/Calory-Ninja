@@ -8,20 +8,24 @@ import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import com.theophiluskibet.caloryninja.presentation.screens.CaloryDetailScreen
 import com.theophiluskibet.caloryninja.presentation.screens.CaloryScreen
+import com.theophiluskibet.caloryninja.presentation.screens.OnboardingScreen
 
 @Composable
 fun AppNavHost(
     modifier: Modifier = Modifier,
     navController: NavHostController = rememberNavController(),
-    startDestination: String = "home"
+    startDestination: String = "onboarding"
 ) {
     NavHost(
         modifier = modifier,
         navController = navController,
         startDestination = startDestination
     ) {
+        composable("onboarding") {
+            OnboardingScreen(onNavigateToHome = { navController.navigate("home") })
+        }
         composable("home") {
-            CaloryScreen()
+            CaloryScreen(onNavigateToDetails = { navController.navigate("details") })
         }
         composable("details") {
             CaloryDetailScreen()

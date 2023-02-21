@@ -7,5 +7,5 @@ import retrofit2.http.Query
 
 interface CaloryApi {
     @GET("nutrition")
-    suspend fun getCalories(@Query("query") query: String = "rice and tomato"): Response<Calory>
+    suspend fun getCalories(@Query("query") query: String): Response<Calory>
 }
