@@ -1,4 +1,4 @@
-package com.theophiluskibet.caloryninja.di
+package com.theophiluskibet.caloryninja.utils
 
 import okhttp3.Interceptor
 import okhttp3.Response

@@ -1,4 +1,4 @@
-package com.theophiluskibet.caloryninja.ui.theme
+package com.theophiluskibet.caloryninja.presentation.ui.theme
 
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.Shapes

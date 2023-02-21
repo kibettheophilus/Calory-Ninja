@@ -5,7 +5,8 @@ import com.theophiluskibet.caloryninja.data.datasource.CaloryRepository
 import com.theophiluskibet.caloryninja.data.datasource.CaloryRepositoryImpl
 import com.theophiluskibet.caloryninja.data.local.CaloryDatabase
 import com.theophiluskibet.caloryninja.data.remote.api.CaloryApi
-import com.theophiluskibet.caloryninja.presentation.CaloryViewModel
+import com.theophiluskibet.caloryninja.presentation.viewmodel.CaloryViewModel
+import com.theophiluskibet.caloryninja.utils.TokenInterceptor
 import okhttp3.OkHttpClient
 import org.koin.android.ext.koin.androidApplication
 import org.koin.androidx.viewmodel.dsl.viewModel
