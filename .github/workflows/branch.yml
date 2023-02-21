@@ -19,3 +19,14 @@ jobs:
 
       - name: Build with gradle
         run: ./gradlew build
+
+  unit-tests:
+    name: Unit Tests
+    needs: [ build ]
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout Code
+        uses: actions/checkout@v2
+
+      - name: Execute Tests
+        run: ./gradlew test
