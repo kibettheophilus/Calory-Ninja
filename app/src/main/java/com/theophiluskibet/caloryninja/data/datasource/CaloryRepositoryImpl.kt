@@ -22,4 +22,8 @@ class CaloryRepositoryImpl(private val caloryApi: CaloryApi, private val caloryD
     override suspend fun getCalory(food: String): CaloryEntity {
         return caloryDao.getCalory(food)
     }
+
+    override suspend fun getSavedCalories(): List<CaloryEntity> {
+        return caloryDao.getCalories()
+    }
 }

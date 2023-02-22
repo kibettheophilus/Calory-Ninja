@@ -15,9 +15,9 @@ class CaloryViewModel(private val caloryRepository: CaloryRepository) : ViewMode
     private val _calories = MutableLiveData<UiState<List<CaloryEntity>>>()
     val calories: LiveData<UiState<List<CaloryEntity>>> = _calories
 
-//    init {
-//        getCalories(food = "rice")
-//    }
+    init {
+        getSavedCalories()
+    }
 
     fun getCalories(food: String) {
         _calories.value = UiState.Loading()
@@ -30,6 +30,19 @@ class CaloryViewModel(private val caloryRepository: CaloryRepository) : ViewMode
             } catch (e: Exception) {
                 _calories.value = UiState.Error(e.localizedMessage)
                 Log.d("CALORIES", "CALORIESVM: ${e.localizedMessage}")
+            }
+        }
+    }
+
+    private fun getSavedCalories() {
+        _calories.value = UiState.Loading()
+
+        viewModelScope.launch {
+            try {
+                val result = caloryRepository.getSavedCalories()
+                _calories.value = UiState.Success(result)
+            } catch (e: Exception) {
+                _calories.value = UiState.Error(e.localizedMessage)
             }
         }
     }

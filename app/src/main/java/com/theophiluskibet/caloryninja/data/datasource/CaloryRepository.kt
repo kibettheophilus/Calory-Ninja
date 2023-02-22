@@ -6,4 +6,6 @@ interface CaloryRepository {
     suspend fun getCalories(food: String): List<CaloryEntity>
 
     suspend fun getCalory(food: String): CaloryEntity
+
+    suspend fun getSavedCalories(): List<CaloryEntity>
 }
