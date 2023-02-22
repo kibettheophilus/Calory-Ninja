@@ -5,6 +5,7 @@ import com.theophiluskibet.caloryninja.data.datasource.CaloryRepository
 import com.theophiluskibet.caloryninja.data.datasource.CaloryRepositoryImpl
 import com.theophiluskibet.caloryninja.data.local.CaloryDatabase
 import com.theophiluskibet.caloryninja.data.remote.api.CaloryApi
+import com.theophiluskibet.caloryninja.presentation.viewmodel.CaloryDetailsViewModel
 import com.theophiluskibet.caloryninja.presentation.viewmodel.CaloryViewModel
 import com.theophiluskibet.caloryninja.utils.TokenInterceptor
 import okhttp3.OkHttpClient
@@ -19,12 +20,13 @@ const val BASER_URL = "https://api.calorieninjas.com/v1/"
 val module = module {
     single { provideRetrofit(okHttpClient = get()) }
     single { provideOkhttpClient() }
-    single<CaloryRepository> { CaloryRepositoryImpl(caloryApi = get()) }
+    single<CaloryRepository> { CaloryRepositoryImpl(caloryApi = get(), caloryDao = get()) }
     single {
         Room.databaseBuilder(androidApplication(), CaloryDatabase::class.java, "calory.db").build()
     }
     single { get<CaloryDatabase>().caloryDao() }
     viewModel { CaloryViewModel(caloryRepository = get()) }
+    viewModel { CaloryDetailsViewModel(caloryRepository = get()) }
 }
 
 private fun provideRetrofit(okHttpClient: OkHttpClient): CaloryApi {

@@ -6,14 +6,14 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.theophiluskibet.caloryninja.data.datasource.CaloryRepository
-import com.theophiluskibet.caloryninja.data.remote.models.Calory
+import com.theophiluskibet.caloryninja.data.local.CaloryEntity
 import com.theophiluskibet.caloryninja.utils.UiState
 import kotlinx.coroutines.launch
 
 class CaloryViewModel(private val caloryRepository: CaloryRepository) : ViewModel() {
 
-    private val _calories = MutableLiveData<UiState<Calory>>()
-    val calories: LiveData<UiState<Calory>> = _calories
+    private val _calories = MutableLiveData<UiState<List<CaloryEntity>>>()
+    val calories: LiveData<UiState<List<CaloryEntity>>> = _calories
 
 //    init {
 //        getCalories(food = "rice")
@@ -29,6 +29,7 @@ class CaloryViewModel(private val caloryRepository: CaloryRepository) : ViewMode
                 Log.d("CALORIES", "CALORIESVM: $result")
             } catch (e: Exception) {
                 _calories.value = UiState.Error(e.localizedMessage)
+                Log.d("CALORIES", "CALORIESVM: ${e.localizedMessage}")
             }
         }
     }
