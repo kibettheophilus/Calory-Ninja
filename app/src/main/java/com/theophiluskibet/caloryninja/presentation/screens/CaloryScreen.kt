@@ -1,7 +1,6 @@
 package com.theophiluskibet.caloryninja.presentation.screens
 
-import android.content.Context
-import android.widget.Toast
+import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.grid.GridCells
 import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
@@ -21,6 +20,7 @@ import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
 import com.theophiluskibet.caloryninja.data.local.CaloryEntity
+import com.theophiluskibet.caloryninja.presentation.components.LoadingScreen
 import com.theophiluskibet.caloryninja.presentation.viewmodel.CaloryViewModel
 import com.theophiluskibet.caloryninja.utils.UiState
 import org.koin.androidx.compose.getViewModel
@@ -30,11 +30,13 @@ fun CaloryScreen(
     caloryViewModel: CaloryViewModel = getViewModel(),
     navController: NavController
 ) {
-    val context = LocalContext.current
     var searchString by remember {
         mutableStateOf("")
     }
 
+    LaunchedEffect(key1 = true) {
+        caloryViewModel.getSavedCalories()
+    }
     val caloryUiState = caloryViewModel.calories.observeAsState().value
 
     Column(modifier = Modifier.padding(10.dp)) {
@@ -65,29 +67,20 @@ fun CaloryScreen(
             })
         )
         Spacer(modifier = Modifier.height(20.dp))
-        Content(uiState = caloryUiState, context = context, navController = navController)
+        CaloryListSection(uiState = caloryUiState, navController = navController)
     }
 }
 
 @Composable
-fun LoadingScreen() {
-    Box(modifier = Modifier.fillMaxSize(), contentAlignment = Alignment.Center) {
-        CircularProgressIndicator()
-    }
-}
-
-@Composable
-fun Content(uiState: UiState<List<CaloryEntity>>?, context: Context, navController: NavController) {
+fun CaloryListSection(uiState: UiState<List<CaloryEntity>>?, navController: NavController) {
     when (uiState) {
-        is UiState.Error -> Toast.makeText(
-            context,
-            "${uiState.error}",
-            Toast.LENGTH_LONG
-        ).show()
+        is UiState.Error -> {
+            EmptyScreen(text = "Please check your internet and search again")
+        }
         is UiState.Loading -> LoadingScreen()
         is UiState.Success -> {
             if (uiState.data!!.isEmpty()) {
-                EmptyScreen()
+                EmptyScreen(text = "No data, Please search")
             } else {
                 Column(modifier = Modifier.fillMaxSize()) {
                     LazyVerticalGrid(columns = GridCells.Fixed(2)) {
@@ -99,15 +92,15 @@ fun Content(uiState: UiState<List<CaloryEntity>>?, context: Context, navControll
             }
         }
         else -> {
-            EmptyScreen()
+            EmptyScreen(text = "No data, Please search")
         }
     }
 }
 
 @Composable
-fun EmptyScreen() {
+fun EmptyScreen(text: String) {
     Box(modifier = Modifier.fillMaxSize(), contentAlignment = Alignment.Center) {
-        Text(text = "No data, please search")
+        Text(text = text)
     }
 }
 
@@ -117,7 +110,8 @@ fun CaloryCard(caloryItem: CaloryEntity, navController: NavController) {
     Card(
         elevation = 10.dp,
         modifier = Modifier.padding(10.dp),
-        onClick = { navController.navigate("details/${caloryItem.name}") }
+        onClick = { navController.navigate("details/${caloryItem.name}") },
+        border = BorderStroke(1.dp, Color.Black)
     ) {
         Column(modifier = Modifier.padding(10.dp)) {
             Text(text = "Name: ${caloryItem.name}")

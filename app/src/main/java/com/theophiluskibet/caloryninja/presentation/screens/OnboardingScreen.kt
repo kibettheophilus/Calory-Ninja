@@ -26,7 +26,6 @@ fun OnboardingScreen(onNavigateToHome: () -> Unit) {
     ) {
         Text(text = "Search for food calories", style = TextStyle(fontSize = 50.sp))
         Image(painter = painterResource(id = R.drawable.search), contentDescription = "")
-        // Spacer(modifier = Modifier.height(20.dp))
         Button(
             modifier = Modifier.fillMaxWidth().height(50.dp),
             onClick = onNavigateToHome,
