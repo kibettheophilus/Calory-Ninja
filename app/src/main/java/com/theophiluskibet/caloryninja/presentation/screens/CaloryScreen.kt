@@ -2,6 +2,8 @@ package com.theophiluskibet.caloryninja.presentation.screens
 
 import android.content.Context
 import android.widget.Toast
+import androidx.compose.foundation.BorderStroke
+import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.grid.GridCells
 import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
@@ -35,6 +37,9 @@ fun CaloryScreen(
         mutableStateOf("")
     }
 
+    LaunchedEffect(key1 = true) {
+        caloryViewModel.getSavedCalories()
+    }
     val caloryUiState = caloryViewModel.calories.observeAsState().value
 
     Column(modifier = Modifier.padding(10.dp)) {
@@ -117,7 +122,8 @@ fun CaloryCard(caloryItem: CaloryEntity, navController: NavController) {
     Card(
         elevation = 10.dp,
         modifier = Modifier.padding(10.dp),
-        onClick = { navController.navigate("details/${caloryItem.name}") }
+        onClick = { navController.navigate("details/${caloryItem.name}") },
+        border = BorderStroke(1.dp, Color.Black)
     ) {
         Column(modifier = Modifier.padding(10.dp)) {
             Text(text = "Name: ${caloryItem.name}")
