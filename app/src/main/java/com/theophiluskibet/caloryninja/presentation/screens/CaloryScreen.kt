@@ -1,7 +1,6 @@
 package com.theophiluskibet.caloryninja.presentation.screens
 
 import android.content.Context
-import android.widget.Toast
 import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.*
@@ -84,15 +83,13 @@ fun LoadingScreen() {
 @Composable
 fun Content(uiState: UiState<List<CaloryEntity>>?, context: Context, navController: NavController) {
     when (uiState) {
-        is UiState.Error -> Toast.makeText(
-            context,
-            "${uiState.error}",
-            Toast.LENGTH_LONG
-        ).show()
+        is UiState.Error -> {
+            EmptyScreen(text = "Please check your internet and search again")
+        }
         is UiState.Loading -> LoadingScreen()
         is UiState.Success -> {
             if (uiState.data!!.isEmpty()) {
-                EmptyScreen()
+                EmptyScreen(text = "No data, Please search")
             } else {
                 Column(modifier = Modifier.fillMaxSize()) {
                     LazyVerticalGrid(columns = GridCells.Fixed(2)) {
@@ -104,15 +101,15 @@ fun Content(uiState: UiState<List<CaloryEntity>>?, context: Context, navControll
             }
         }
         else -> {
-            EmptyScreen()
+            EmptyScreen(text = "No data, Please search")
         }
     }
 }
 
 @Composable
-fun EmptyScreen() {
+fun EmptyScreen(text: String) {
     Box(modifier = Modifier.fillMaxSize(), contentAlignment = Alignment.Center) {
-        Text(text = "No data, please search")
+        Text(text = text)
     }
 }
 

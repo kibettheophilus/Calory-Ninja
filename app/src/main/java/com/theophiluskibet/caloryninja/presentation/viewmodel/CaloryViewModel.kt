@@ -25,7 +25,7 @@ class CaloryViewModel(private val caloryRepository: CaloryRepository) : ViewMode
                 Log.d("CALORIES", "CALORIESVM: $result")
             } catch (e: Exception) {
                 _calories.value = UiState.Error(e.localizedMessage)
-                Log.d("CALORIES", "CALORIESVM: ${e.localizedMessage}")
+                Log.d("CALORIES", "CALORIESVMErr: ${e.localizedMessage}")
             }
         }
     }
