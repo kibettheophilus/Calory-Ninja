@@ -30,7 +30,7 @@ fun CaloryDetailScreen(
     food: String?,
     caloryDetailsViewModel: CaloryDetailsViewModel = getViewModel()
 ) {
-    val context = LocalContext.current
+   val context = LocalContext.current
 
     LaunchedEffect(key1 = true) {
         caloryDetailsViewModel.getCalory(food.toString())
@@ -39,7 +39,7 @@ fun CaloryDetailScreen(
     val uiState = caloryDetailsViewModel.caloryState.observeAsState().value
     when {
         uiState is UiState.Success -> {
-            DetailsHolder(calory = uiState.data)
+            CaloryDetailSection(calory = uiState.data)
         }
         uiState is UiState.Loading -> {
             LoadingScreen()
@@ -51,7 +51,7 @@ fun CaloryDetailScreen(
 }
 
 @Composable
-fun DetailsHolder(calory: CaloryEntity?) {
+fun CaloryDetailSection(calory: CaloryEntity?) {
     Column(
         modifier = Modifier.fillMaxSize().padding(20.dp)
             .border(BorderStroke(1.dp, Color.Black), shape = RoundedCornerShape(10.dp))
