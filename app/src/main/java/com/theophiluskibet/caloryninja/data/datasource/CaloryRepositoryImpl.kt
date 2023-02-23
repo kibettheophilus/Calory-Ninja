@@ -1,14 +1,29 @@
 package com.theophiluskibet.caloryninja.data.datasource
 
-import android.util.Log
+import com.theophiluskibet.caloryninja.data.local.CaloryDao
+import com.theophiluskibet.caloryninja.data.local.CaloryEntity
+import com.theophiluskibet.caloryninja.data.mappers.toEntity
 import com.theophiluskibet.caloryninja.data.remote.api.CaloryApi
-import com.theophiluskibet.caloryninja.data.remote.models.Calory
 
-class CaloryRepositoryImpl(private val caloryApi: CaloryApi) : CaloryRepository {
-    override suspend fun getCalories(food: String): Calory {
-        val response = caloryApi.getCalories(food).body()!!
+class CaloryRepositoryImpl(private val caloryApi: CaloryApi, private val caloryDao: CaloryDao) :
+    CaloryRepository {
+    override suspend fun getCalories(food: String): List<CaloryEntity> {
+        val listOfFoods = food.split("and").toList()
+        val calories = caloryDao.getCalories()
+        return if (calories.size == listOfFoods.size) {
+            calories
+        } else {
+            val response = caloryApi.getCalories(food).body()!!
+            caloryDao.saveCalory(response.caloryItemsResponse.map { it.toEntity() })
+            response.caloryItemsResponse.map { it.toEntity() }
+        }
+    }
 
-        Log.d("CALORIES", "CALORIESRE: $response")
-        return response
+    override suspend fun getCalory(food: String): CaloryEntity {
+        return caloryDao.getCalory(food)
+    }
+
+    override suspend fun getSavedCalories(): List<CaloryEntity> {
+        return caloryDao.getCalories()
     }
 }

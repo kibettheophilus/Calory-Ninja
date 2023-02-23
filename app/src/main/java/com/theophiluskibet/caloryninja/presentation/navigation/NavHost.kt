@@ -25,10 +25,10 @@ fun AppNavHost(
             OnboardingScreen(onNavigateToHome = { navController.navigate("home") })
         }
         composable("home") {
-            CaloryScreen(onNavigateToDetails = { navController.navigate("details") })
+            CaloryScreen(navController = navController)
         }
-        composable("details") {
-            CaloryDetailScreen()
+        composable("details/{food}") {
+            CaloryDetailScreen(it.arguments?.getString("food"))
         }
     }
 }

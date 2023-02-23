@@ -28,12 +28,12 @@ fun OnboardingScreen(onNavigateToHome: () -> Unit) {
         Image(painter = painterResource(id = R.drawable.search), contentDescription = "")
         // Spacer(modifier = Modifier.height(20.dp))
         Button(
-            modifier = Modifier.fillMaxWidth(),
+            modifier = Modifier.fillMaxWidth().height(50.dp),
             onClick = onNavigateToHome,
-            border = BorderStroke(1.dp, Color.Cyan),
-            colors = ButtonDefaults.outlinedButtonColors(contentColor = Color.Cyan)
+            border = BorderStroke(1.dp, Color.Black),
+            colors = ButtonDefaults.outlinedButtonColors(contentColor = Color.Black)
         ) {
-            Text(text = "Start")
+            Text(text = "Start", style = TextStyle(fontSize = 20.sp))
         }
     }
 }
@@ -41,5 +41,5 @@ fun OnboardingScreen(onNavigateToHome: () -> Unit) {
 @Preview(showBackground = true)
 @Composable
 fun PreviewOnboardingScreen() {
-    OnboardingScreen({})
+    OnboardingScreen {}
 }

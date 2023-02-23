@@ -2,7 +2,7 @@ package com.theophiluskibet.caloryninja.data.remote.models
 
 import com.google.gson.annotations.SerializedName
 
-data class Calory(
+data class CaloryResponse(
     @SerializedName("items")
-    val caloryItems: List<CaloryItem>
+    val caloryItemsResponse: List<CaloryItemResponse>
 )

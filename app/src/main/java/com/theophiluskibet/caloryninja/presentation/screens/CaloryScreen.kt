@@ -6,6 +6,8 @@ import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.grid.GridCells
 import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
 import androidx.compose.foundation.lazy.grid.items
+import androidx.compose.foundation.text.KeyboardActions
+import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material.*
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Search
@@ -13,10 +15,12 @@ import androidx.compose.runtime.*
 import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.unit.dp
-import com.theophiluskibet.caloryninja.data.remote.models.Calory
-import com.theophiluskibet.caloryninja.data.remote.models.CaloryItem
+import androidx.navigation.NavController
+import com.theophiluskibet.caloryninja.data.local.CaloryEntity
 import com.theophiluskibet.caloryninja.presentation.viewmodel.CaloryViewModel
 import com.theophiluskibet.caloryninja.utils.UiState
 import org.koin.androidx.compose.getViewModel
@@ -24,43 +28,45 @@ import org.koin.androidx.compose.getViewModel
 @Composable
 fun CaloryScreen(
     caloryViewModel: CaloryViewModel = getViewModel(),
-    onNavigateToDetails: () -> Unit
+    navController: NavController
 ) {
     val context = LocalContext.current
     var searchString by remember {
         mutableStateOf("")
     }
-    var listOfFoods by remember {
-        mutableStateOf(mutableListOf<ListOfFoods>())
-    }
 
     val caloryUiState = caloryViewModel.calories.observeAsState().value
 
-    Column() {
-        TextField(
+    Column(modifier = Modifier.padding(10.dp)) {
+        OutlinedTextField(
             value = searchString,
             onValueChange = {
                 searchString = it
             },
             modifier = Modifier.fillMaxWidth(),
+
             placeholder = {
                 Text(text = "Search for food")
             },
             trailingIcon = {
                 IconButton(onClick = {
-                    // searchString = ""
                     caloryViewModel.getCalories(searchString)
+                    // searchString = ""
                 }) {
                     Icon(imageVector = Icons.Default.Search, contentDescription = "")
                 }
-            }
-
+            },
+            singleLine = true,
+            colors = TextFieldDefaults.outlinedTextFieldColors(focusedBorderColor = Color.Black),
+            keyboardOptions = KeyboardOptions(imeAction = ImeAction.Search),
+            keyboardActions = KeyboardActions(onSearch = {
+                caloryViewModel.getCalories(searchString)
+                // searchString = ""
+            })
         )
         Spacer(modifier = Modifier.height(20.dp))
-        Content(uiState = caloryUiState, context = context, onClick = onNavigateToDetails)
+        Content(uiState = caloryUiState, context = context, navController = navController)
     }
-
-    // Toast.makeText(context, "Loading......", Toast.LENGTH_LONG).show()
 }
 
 @Composable
@@ -70,16 +76,8 @@ fun LoadingScreen() {
     }
 }
 
-data class ListOfFoods(
-    val name: String
-)
-
 @Composable
-fun SearchInput() {
-}
-
-@Composable
-fun Content(uiState: UiState<Calory>?, context: Context, onClick: () -> Unit) {
+fun Content(uiState: UiState<List<CaloryEntity>>?, context: Context, navController: NavController) {
     when (uiState) {
         is UiState.Error -> Toast.makeText(
             context,
@@ -88,22 +86,13 @@ fun Content(uiState: UiState<Calory>?, context: Context, onClick: () -> Unit) {
         ).show()
         is UiState.Loading -> LoadingScreen()
         is UiState.Success -> {
-            if (uiState.data!!.caloryItems.isEmpty()) {
+            if (uiState.data!!.isEmpty()) {
                 EmptyScreen()
             } else {
                 Column(modifier = Modifier.fillMaxSize()) {
-//                    LazyColumn() {
-//                        items(uiState.data!!.caloryItems) { calory ->
-//                            Column() {
-//                                Text(text = calory.name)
-//                                Spacer(modifier = Modifier.height(5.dp))
-//                                Text(text = calory.calories.toString())
-//                            }
-//                        }
-//                    }
                     LazyVerticalGrid(columns = GridCells.Fixed(2)) {
-                        items(uiState.data.caloryItems) {
-                            CaloryCard(caloryItem = it, onClick = onClick)
+                        items(uiState.data) {
+                            CaloryCard(caloryItem = it, navController = navController)
                         }
                     }
                 }
@@ -124,11 +113,11 @@ fun EmptyScreen() {
 
 @OptIn(ExperimentalMaterialApi::class)
 @Composable
-fun CaloryCard(caloryItem: CaloryItem, onClick: () -> Unit) {
+fun CaloryCard(caloryItem: CaloryEntity, navController: NavController) {
     Card(
         elevation = 10.dp,
         modifier = Modifier.padding(10.dp),
-        onClick = onClick
+        onClick = { navController.navigate("details/${caloryItem.name}") }
     ) {
         Column(modifier = Modifier.padding(10.dp)) {
             Text(text = "Name: ${caloryItem.name}")

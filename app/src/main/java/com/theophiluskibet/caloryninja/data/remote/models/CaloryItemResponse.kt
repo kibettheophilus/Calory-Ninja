@@ -1,6 +1,6 @@
 package com.theophiluskibet.caloryninja.data.remote.models
 
-data class CaloryItem(
+data class CaloryItemResponse(
     val calories: Double,
     val carbohydrates_total_g: Double,
     val cholesterol_mg: Int,
