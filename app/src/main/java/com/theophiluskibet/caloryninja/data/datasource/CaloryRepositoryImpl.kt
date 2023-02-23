@@ -11,7 +11,7 @@ class CaloryRepositoryImpl(private val caloryApi: CaloryApi, private val caloryD
     override suspend fun getCalories(food: String): List<CaloryEntity> {
         val listOfFoods = food.replace("and", "").trim().split("  ")
         val calories = caloryDao.getCaloriesByNames(listOfFoods)
-        Log.d("LOCALCALORIES","$listOfFoods ${listOfFoods.size} ${calories.size} $calories")
+        Log.d("LOCALCALORIES", "$listOfFoods ${listOfFoods.size} ${calories.size} $calories")
         return if (calories.size == listOfFoods.size) {
             calories
         } else {
