@@ -20,6 +20,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.theophiluskibet.caloryninja.data.local.CaloryEntity
 import com.theophiluskibet.caloryninja.presentation.components.CaloryDetailText
+import com.theophiluskibet.caloryninja.presentation.components.LoadingScreen
 import com.theophiluskibet.caloryninja.presentation.viewmodel.CaloryDetailsViewModel
 import com.theophiluskibet.caloryninja.utils.UiState
 import org.koin.androidx.compose.getViewModel

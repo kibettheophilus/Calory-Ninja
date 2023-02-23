@@ -1,8 +1,6 @@
 package com.theophiluskibet.caloryninja.presentation.screens
 
-import android.content.Context
 import androidx.compose.foundation.BorderStroke
-import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.grid.GridCells
 import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
@@ -22,6 +20,7 @@ import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
 import com.theophiluskibet.caloryninja.data.local.CaloryEntity
+import com.theophiluskibet.caloryninja.presentation.components.LoadingScreen
 import com.theophiluskibet.caloryninja.presentation.viewmodel.CaloryViewModel
 import com.theophiluskibet.caloryninja.utils.UiState
 import org.koin.androidx.compose.getViewModel
@@ -31,7 +30,6 @@ fun CaloryScreen(
     caloryViewModel: CaloryViewModel = getViewModel(),
     navController: NavController
 ) {
-    val context = LocalContext.current
     var searchString by remember {
         mutableStateOf("")
     }
@@ -69,19 +67,12 @@ fun CaloryScreen(
             })
         )
         Spacer(modifier = Modifier.height(20.dp))
-        Content(uiState = caloryUiState, context = context, navController = navController)
+        CaloryListSection(uiState = caloryUiState, navController = navController)
     }
 }
 
 @Composable
-fun LoadingScreen() {
-    Box(modifier = Modifier.fillMaxSize(), contentAlignment = Alignment.Center) {
-        CircularProgressIndicator()
-    }
-}
-
-@Composable
-fun Content(uiState: UiState<List<CaloryEntity>>?, context: Context, navController: NavController) {
+fun CaloryListSection(uiState: UiState<List<CaloryEntity>>?, navController: NavController) {
     when (uiState) {
         is UiState.Error -> {
             EmptyScreen(text = "Please check your internet and search again")
