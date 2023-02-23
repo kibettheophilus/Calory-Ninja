@@ -14,12 +14,12 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.text.TextStyle
-import androidx.compose.ui.text.font.FontStyle
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.theophiluskibet.caloryninja.data.local.CaloryEntity
+import com.theophiluskibet.caloryninja.presentation.components.CaloryDetailText
 import com.theophiluskibet.caloryninja.presentation.viewmodel.CaloryDetailsViewModel
 import com.theophiluskibet.caloryninja.utils.UiState
 import org.koin.androidx.compose.getViewModel
@@ -63,70 +63,46 @@ fun DetailsHolder(calory: CaloryEntity?) {
             fontWeight = FontWeight.Bold
         )
         Spacer(modifier = Modifier.height(20.dp))
-        Text(
-            text = "Calories: ${calory!!.calories}",
-            modifier = Modifier.padding(start = 10.dp),
-            fontStyle = FontStyle.Italic
-        )
+        CaloryDetailText(text = "Calories: ${calory.calories}")
+
         Spacer(modifier = Modifier.height(10.dp))
-        Text(
-            text = "Carbohydrates: ${calory!!.carbohydratesTotalGrams}Grams",
-            modifier = Modifier.padding(start = 10.dp),
-            fontStyle = FontStyle.Italic
-        )
+
+        CaloryDetailText(text = "Carbohydrates: ${calory.carbohydratesTotalGrams}Grams")
+
         Spacer(modifier = Modifier.height(10.dp))
-        Text(
-            text = "Cholesterol: ${calory!!.cholesterolMilliGrams}MilliGrams",
-            modifier = Modifier.padding(start = 10.dp),
-            fontStyle = FontStyle.Italic
-        )
+
+        CaloryDetailText(text = "Cholesterol: ${calory.cholesterolMilliGrams}MilliGrams")
+
         Spacer(modifier = Modifier.height(10.dp))
-        Text(
-            text = "Saturated Fats: ${calory!!.fatSaturatedGrams}Grams",
-            modifier = Modifier.padding(start = 10.dp),
-            fontStyle = FontStyle.Italic
-        )
+
+        CaloryDetailText(text = "Saturated Fats: ${calory.fatSaturatedGrams}Grams")
+
         Spacer(modifier = Modifier.height(10.dp))
-        Text(
-            text = "Total Fats: ${calory!!.fatTotalGrams}Grams",
-            modifier = Modifier.padding(start = 10.dp),
-            fontStyle = FontStyle.Italic
-        )
+
+        CaloryDetailText(text = "Total Fats: ${calory.fatTotalGrams}Grams")
+
         Spacer(modifier = Modifier.height(10.dp))
-        Text(
-            text = "Fiber: ${calory!!.fiberGrams}Grams",
-            modifier = Modifier.padding(start = 10.dp),
-            fontStyle = FontStyle.Italic
-        )
+
+        CaloryDetailText(text = "Fiber: ${calory.fiberGrams}Grams")
+
         Spacer(modifier = Modifier.height(10.dp))
-        Text(
-            text = "Potassium: ${calory!!.potassiumMilliGrams}MilliGrams",
-            modifier = Modifier.padding(start = 10.dp),
-            fontStyle = FontStyle.Italic
-        )
+
+        CaloryDetailText(text = "Potassium: ${calory.potassiumMilliGrams}MilliGrams")
+
         Spacer(modifier = Modifier.height(10.dp))
-        Text(
-            text = "Protein: ${calory!!.proteinGrams}Grams",
-            modifier = Modifier.padding(start = 10.dp),
-            fontStyle = FontStyle.Italic
-        )
+
+        CaloryDetailText(text = "Protein: ${calory.proteinGrams}Grams")
+
         Spacer(modifier = Modifier.height(10.dp))
-        Text(
-            text = "Serving Size: ${calory!!.servingSizeGrams}Grams",
-            modifier = Modifier.padding(start = 10.dp),
-            fontStyle = FontStyle.Italic
-        )
+
+        CaloryDetailText(text = "Serving Size: ${calory.servingSizeGrams}Grams")
+
         Spacer(modifier = Modifier.height(10.dp))
-        Text(
-            text = "Sodium: ${calory!!.sodiumMilliGrams}MilliGrams",
-            modifier = Modifier.padding(start = 10.dp),
-            fontStyle = FontStyle.Italic
-        )
+
+        CaloryDetailText(text = "Sodium: ${calory.sodiumMilliGrams}MilliGrams")
+
         Spacer(modifier = Modifier.height(10.dp))
-        Text(
-            text = "Sugar: ${calory!!.sugarGrams}Grams",
-            modifier = Modifier.padding(start = 10.dp),
-            fontStyle = FontStyle.Italic
-        )
+
+        CaloryDetailText(text = "Sugar: ${calory.sugarGrams}Grams")
     }
 }
