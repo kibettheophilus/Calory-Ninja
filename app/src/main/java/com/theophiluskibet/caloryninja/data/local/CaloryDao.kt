@@ -8,7 +8,7 @@ import androidx.room.Query
 @Dao
 interface CaloryDao {
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    suspend fun saveCalory(list: List<CaloryEntity>)
+    suspend fun saveCalories(list: List<CaloryEntity>)
 
     @Query("SELECT * FROM calory_table")
     suspend fun getCalories(): List<CaloryEntity>

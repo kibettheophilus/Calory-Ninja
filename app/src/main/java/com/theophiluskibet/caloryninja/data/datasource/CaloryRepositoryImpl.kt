@@ -16,7 +16,7 @@ class CaloryRepositoryImpl(private val caloryApi: CaloryApi, private val caloryD
             calories
         } else {
             val response = caloryApi.getCalories(food).body()!!
-            caloryDao.saveCalory(response.caloryItemsResponse.map { it.toEntity() })
+            caloryDao.saveCalories(response.caloryItemsResponse.map { it.toEntity() })
             response.caloryItemsResponse.map { it.toEntity() }
         }
     }
