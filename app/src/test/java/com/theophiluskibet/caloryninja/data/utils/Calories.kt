@@ -1,4 +1,4 @@
-package com.theophiluskibet.caloryninja.utils
+package com.theophiluskibet.caloryninja.data.utils
 
 import com.theophiluskibet.caloryninja.data.remote.models.CaloryItemResponse
 

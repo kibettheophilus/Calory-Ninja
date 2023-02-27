@@ -5,7 +5,7 @@ import com.theophiluskibet.caloryninja.data.local.CaloryDao
 import com.theophiluskibet.caloryninja.data.local.CaloryEntity
 import com.theophiluskibet.caloryninja.data.mappers.toEntity
 import com.theophiluskibet.caloryninja.data.remote.api.CaloryApi
-import com.theophiluskibet.caloryninja.utils.calories
+import com.theophiluskibet.caloryninja.data.utils.calories
 import io.mockk.coEvery
 import io.mockk.mockk
 import kotlinx.coroutines.test.runTest

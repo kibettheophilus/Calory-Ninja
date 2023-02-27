@@ -1,13 +1,11 @@
-package com.theophiluskibet.caloryninja.data.datasource
+package com.theophiluskibet.caloryninja.data.local
 
 import android.content.Context
 import androidx.room.Room
 import androidx.test.core.app.ApplicationProvider
 import com.google.common.truth.Truth.assertThat
-import com.theophiluskibet.caloryninja.data.local.CaloryDao
-import com.theophiluskibet.caloryninja.data.local.CaloryDatabase
 import com.theophiluskibet.caloryninja.data.mappers.toEntity
-import com.theophiluskibet.caloryninja.utils.calories
+import com.theophiluskibet.caloryninja.data.utils.calories
 import kotlinx.coroutines.test.runTest
 import org.junit.After
 import org.junit.Before
