@@ -30,13 +30,13 @@ class CaloryViewModelTest {
 
     @Test
     fun `get saved calories update ui state loading`() = runTest {
-        assertThat(caloryViewModel.calories.value).isNull()
+        assertThat(caloryViewModel.caloriesState.value).isNull()
     }
 
     @Test
     fun `get saved calories update ui state with data`() = runTest {
         caloryViewModel.getSavedCalories()
 
-        assertThat(caloryViewModel.calories.value).isNotNull()
+        assertThat(caloryViewModel.caloriesState.value).isNotNull()
     }
 }
