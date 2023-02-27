@@ -37,7 +37,7 @@ fun CaloryScreen(
     LaunchedEffect(key1 = true) {
         caloryViewModel.getSavedCalories()
     }
-    val caloryUiState = caloryViewModel.calories.observeAsState().value
+    val caloryUiState = caloryViewModel.caloriesState.observeAsState().value
 
     Column(modifier = Modifier.padding(10.dp)) {
         OutlinedTextField(
