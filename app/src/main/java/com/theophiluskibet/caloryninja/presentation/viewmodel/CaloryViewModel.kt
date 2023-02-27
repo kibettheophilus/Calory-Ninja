@@ -12,33 +12,33 @@ import kotlinx.coroutines.launch
 
 class CaloryViewModel(private val caloryRepository: CaloryRepository) : ViewModel() {
 
-    private val _calories = MutableLiveData<UiState<List<CaloryEntity>>>()
-    val calories: LiveData<UiState<List<CaloryEntity>>> = _calories
+    private val _caloriesState = MutableLiveData<UiState<List<CaloryEntity>>>()
+    val caloriesState: LiveData<UiState<List<CaloryEntity>>> = _caloriesState
 
     fun getCalories(food: String) {
-        _calories.value = UiState.Loading()
+        _caloriesState.value = UiState.Loading()
 
         viewModelScope.launch {
             try {
                 val result = caloryRepository.getCalories(food)
-                _calories.value = UiState.Success(result)
+                _caloriesState.value = UiState.Success(result)
                 Log.d("CALORIES", "CALORIESVM: $result")
             } catch (e: Exception) {
-                _calories.value = UiState.Error(e.localizedMessage)
+                _caloriesState.value = UiState.Error(e.localizedMessage)
                 Log.d("CALORIES", "CALORIESVMErr: ${e.localizedMessage}")
             }
         }
     }
 
     fun getSavedCalories() {
-        _calories.value = UiState.Loading()
+        _caloriesState.value = UiState.Loading()
 
         viewModelScope.launch {
             try {
                 val result = caloryRepository.getSavedCalories()
-                _calories.value = UiState.Success(result)
+                _caloriesState.value = UiState.Success(result)
             } catch (e: Exception) {
-                _calories.value = UiState.Error(e.localizedMessage)
+                _caloriesState.value = UiState.Error(e.localizedMessage)
             }
         }
     }
