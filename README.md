@@ -1,5 +1,5 @@
 # Calory-Ninja
-An Android app consuming API to display a sample list of calories, built with MVVM pattern as well as Architecture Components. 
+An Android app consuming API to display a food calories, built with MVVM pattern as well as Architecture Components. 
 
 ## Screenshots
 
