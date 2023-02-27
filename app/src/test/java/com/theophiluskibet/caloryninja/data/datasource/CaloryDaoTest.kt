@@ -37,11 +37,29 @@ class CaloryDaoTest {
     }
 
     @Test
-    fun `save calories to db `() = runTest {
+    fun `save calories to db and retreive`() = runTest {
         caloryDao.saveCalories(calories.map { it.toEntity() })
 
         val result = caloryDao.getCalories()
 
         assertThat(result).isNotEmpty()
+    }
+
+    @Test
+    fun `get calory by name`() = runTest {
+        caloryDao.saveCalories(calories.map { it.toEntity() })
+
+        val result = caloryDao.getCalory("meat")
+
+        assertThat(result.name).isEqualTo("meat")
+    }
+
+    @Test
+    fun `get calories by list of names`() = runTest {
+        caloryDao.saveCalories(calories.map { it.toEntity() })
+
+        val result = caloryDao.getCaloriesByNames(listOf("rice", "meat"))
+
+        assertThat(result.size).isEqualTo(2)
     }
 }
